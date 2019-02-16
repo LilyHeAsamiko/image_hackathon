@@ -11,6 +11,7 @@ from cloudinary.utils import cloudinary_url
 from cloudinary.uploader import upload
 from cloudinary.api import *
 from cloudinary.models import CloudinaryField
+import matplotlib.pyplot as plt
 
 # config
 os.chdir(os.path.join(os.path.dirname(sys.argv[0]), '.'))
@@ -108,19 +109,19 @@ cloudinary.uploader.upload(name[0],
 cloudinary.api.tags()
 
 #remove background
-print("--- upload and the photo chair and remove the background")
-name.append("chair.jpg")
-cloudinary.uploader.upload(name[1],
-    background_removal = "pixelz",
-    categorization = "google_tagging,imagga_tagging:en:ch:jp,aws_rek_tagging", 
-    auto_tagging = 0.8) 
-#cloudinary.api.update_resources_access_mode_by_ids("public", name)
-cloudinary.api.tags()
+#print("--- upload and the photo chair and remove the background")
+#name.append("chair.jpg")
+#cloudinary.uploader.upload(name[1],
+#    background_removal = "pixelz",
+#    categorization = "google_tagging,imagga_tagging:en:ch:jp,aws_rek_tagging", 
+#    auto_tagging = 0.8) 
+##cloudinary.api.update_resources_access_mode_by_ids("public", name)
+#cloudinary.api.tags()
 
 #show validation date of food
 print("--- upload and tag the photo fish with validation date focused")
 name.append("fish.jpg")
-result = cloudinary.uploader.upload(name[2],
+result = cloudinary.uploader.upload(name[1],
     ocr = "adv_ocr",
     transformation = [
             {'width': 500, 'height': 150, 'gravity': "south_east", 'crop': "crop"},
@@ -131,9 +132,9 @@ result = cloudinary.uploader.upload(name[2],
 cloudinary.api.tags()
 
 #enhancement for indoor pictures
-print("--- upload and the photo fish and enhance the instensity")
+print("--- upload and tag the photo fish and enhance the instensity")
 name.append("fish.jpg")
-cloudinary.uploader.upload(name[3],
+cloudinary.uploader.upload(name[2],
     public_id = "beach",  
     eager = { 'effect': 'viesus_correct', 'crop': "scale", 'width': 400 },
     categorization = "google_tagging,imagga_tagging:en:ch:jp,aws_rek_tagging", 
@@ -143,10 +144,10 @@ cloudinary.api.tags()
 
 #list the properties of what we uploaded
 cloudinary.api.resources(type = "upload")
-image = CloudinaryField(name)
-Cloudinaryimage(image)
+#visualize the pictures
+image=CloudinaryField(name)
+#plt.imshow(image)
 
 #delete and restore
 cloudinary.api.delete_resources(name[1])
-#cloudinary.api.restore(name)
 
